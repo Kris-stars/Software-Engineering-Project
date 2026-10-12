@@ -16,17 +16,17 @@ public class OrderBook extends CustormerBook{
 		this.publictions = publictions;
 	}
 	
-	public OrderBook(long area, long address) {
+	public OrderBook(double area, long address) {
 		super(area,address);
 		
 	}
 
-	public OrderBook(long area, long address, int custormernum, String[] publictions) {
+	public OrderBook(double area, long address, int custormernum, String[] publictions) {
 		super(address,custormernum,area);
 		this.publictions = publictions;
 	}
 
-	public OrderBook(long area) {
+	public OrderBook(double area) {
 		super(area);
 		
 	}

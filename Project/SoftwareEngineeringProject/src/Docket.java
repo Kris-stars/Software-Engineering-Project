@@ -18,22 +18,22 @@ public class Docket extends OrderBook{
 	}
 
 	
-	public Docket(boolean stock,int docketnum,long area, long address,int custormernum, String[] publictions) {
+	public Docket(boolean stock,int docketnum,double area, long address,int custormernum, String[] publictions) {
 		super(area,address, custormernum,publictions);
 		this.stock = stock;
 		this.docketnum = docketnum;
 	}
 	
-	public Docket(long area) {
+	public Docket(double area) {
 		super(area);	
 	
 	}
 	
-	public Docket(long area,int docketnum) {
+	public Docket(double area,int docketnum) {
 		super(area);	
 		this.docketnum = docketnum;
 	}
-	public Docket(long area,int custormernum,int docketnum) {
+	public Docket(double area,int custormernum,int docketnum) {
 		super(area,custormernum);	
 		this.docketnum = docketnum;
 	}

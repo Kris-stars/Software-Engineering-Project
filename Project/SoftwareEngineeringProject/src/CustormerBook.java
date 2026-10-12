@@ -4,7 +4,7 @@ public class CustormerBook {
 	private String name;
 	private Long address;
 	private int custormernum;
-	private long area;
+	private double area;
 	
 	public String getName() {
 		return name;
@@ -24,10 +24,10 @@ public class CustormerBook {
 	public void setCustormernum(int custormernum) {
 		this.custormernum = custormernum;
 	}
-	public long getArea() {
+	public double getArea() {
 		return area;
 	}
-	public void setArea(int area) {
+	public void setArea(double area) {
 		this.area = area;
 	}
 	public CustormerBook(String name, long address, int custormernum, long area) {
@@ -38,7 +38,7 @@ public class CustormerBook {
 		this.area = area;
 	}
 
-	public CustormerBook(long address, int custormernum, long area) {
+	public CustormerBook(long address, int custormernum, double area) {
 		this.address = address;
 		this.custormernum = custormernum;
 		this.area = area;
@@ -47,13 +47,13 @@ public class CustormerBook {
 		super();
 		this.custormernum = custormernum;
 	}
-	public CustormerBook(long area,long address) {
+	public CustormerBook(double area,long address) {
 		super();
 		this.area = area;
 		this.address = address;
 	}
 
-	public CustormerBook(long area) {
+	public CustormerBook(double area) {
 		super();
 		this.area = area;
 	}
