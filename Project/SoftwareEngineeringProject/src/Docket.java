@@ -1,4 +1,3 @@
-
 public class Docket extends OrderBook{
 	
 	private boolean stock;
