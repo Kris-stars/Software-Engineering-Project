@@ -2,6 +2,8 @@ public class Docket extends OrderBook{
 	
 	private boolean stock;
 	private int docketnum;
+	private double area;
+	private int customerNum;
 	
 	public boolean isStock() {
 		return stock;
@@ -15,25 +17,40 @@ public class Docket extends OrderBook{
 	public void setDocketnum(int docketnum) {
 		this.docketnum = docketnum;
 	}
+	
+	//added by Denis
+		public void setArea() {
+			this.area = area;
+		}
+		public double getArea() {
+			return area;
+		}
+		public void setCustomerNum() {
+			this.customerNum = customerNum;
+		}
+		public int getCustomerNum() {
+			return customerNum;
+		}
+	
 
 	
-	public Docket(boolean stock,int docketnum,double area, long address,int custormernum, String[] publictions) {
-		super(area,address, custormernum,publictions);
+	public Docket(boolean stock, int docketnum, double area, long address, int custormernum, String[] publictions) {
+		super();
 		this.stock = stock;
 		this.docketnum = docketnum;
 	}
 	
 	public Docket(double area) {
-		super(area);	
+		super();	
 	
 	}
 	
 	public Docket(double area,int docketnum) {
-		super(area);	
+		super();	
 		this.docketnum = docketnum;
 	}
 	public Docket(double area,int custormernum,int docketnum) {
-		super(area,custormernum);	
+		super();	
 		this.docketnum = docketnum;
 	}
 	
