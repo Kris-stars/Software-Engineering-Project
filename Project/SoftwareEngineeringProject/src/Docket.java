@@ -19,20 +19,13 @@ public class Docket extends OrderBook{
 	}
 	
 	//added by Denis
-		public void setArea() {
-			this.area = area;
-		}
-		public double getArea() {
-			return area;
-		}
-		public void setCustomerNum() {
-			this.customerNum = customerNum;
-		}
-		public int getCustomerNum() {
-			return customerNum;
-		}
-	
-
+	public double getArea() {
+		return area;
+	}
+	public int getCustomerNum() {
+		return customerNum;
+	}
+	// 
 	
 	public Docket(boolean stock, int docketnum, double area, long address, int custormernum, String[] publictions) {
 		super();
