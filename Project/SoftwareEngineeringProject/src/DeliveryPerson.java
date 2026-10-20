@@ -11,7 +11,7 @@ public class DeliveryPerson extends Docket {
 		this.delivered = delivered;
 	}
 
-	public DeliveryPerson(long area,int docketnum,boolean delivered ) {
+	public DeliveryPerson(long area,String docketnum,boolean delivered ) {
 		super(area,docketnum);
 		this.delivered = delivered;
 		

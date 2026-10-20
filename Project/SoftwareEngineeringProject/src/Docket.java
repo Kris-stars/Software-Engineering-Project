@@ -1,9 +1,9 @@
 public class Docket extends OrderBook{
 	
 	private boolean stock;
-	private int docketnum;
+	private String docketnum;
 	private double area;
-	private int customerNum;
+	private String customerNum;
 	
 	public boolean isStock() {
 		return stock;
@@ -11,10 +11,10 @@ public class Docket extends OrderBook{
 	public void setStock(boolean stock) {
 		this.stock = stock;
 	}
-	public int getDocketnum() {
+	public String getDocketnum() {
 		return docketnum;
 	}
-	public void setDocketnum(int docketnum) {
+	public void setDocketnum(String docketnum) {
 		this.docketnum = docketnum;
 	}
 	
@@ -22,30 +22,37 @@ public class Docket extends OrderBook{
 	public double getArea() {
 		return area;
 	}
-	public int getCustomerNum() {
+	public String getCustomerNum() {
 		return customerNum;
 	}
 	// 
 	
-	public Docket(boolean stock, int docketnum, double area, long address, int custormernum, String[] publictions) {
-		super();
-		this.stock = stock;
-		this.docketnum = docketnum;
-	}
-	
-	public Docket(double area) {
-		super();	
-	
-	}
-	
-	public Docket(double area,int docketnum) {
-		super();	
-		this.docketnum = docketnum;
-	}
-	public Docket(double area,int custormernum,int docketnum) {
-		super();	
-		this.docketnum = docketnum;
-	}
+	public Docket(boolean stock, String docketnum, double area, long address,
+            String customerNum, String[] publications) {
+  super();
+  this.stock = stock;
+  this.docketnum = docketnum;
+  this.area = area;
+  this.customerNum = customerNum;
+}
+
+public Docket(double area) {
+  super();
+  this.area = area;
+}
+
+public Docket(double area, String docketnum) {
+  super();
+  this.area = area;
+  this.docketnum = docketnum;
+}
+
+public Docket(double area, String customerNum, String docketnum) {
+  super();
+  this.area = area;
+  this.customerNum = customerNum;
+  this.docketnum = docketnum;
+}
 	
 
 }

@@ -10,7 +10,7 @@ public class BillDAO {
              PreparedStatement ps = con.prepareStatement(sql)) {
             ps.setDouble(1, bill.getArea());
             ps.setString(2, bill.getCustomerNum());
-            ps.setString(3, bill.getDocketNum());
+            ps.setString(3, bill.getDocketnum());
             ps.executeUpdate();
         }
     }

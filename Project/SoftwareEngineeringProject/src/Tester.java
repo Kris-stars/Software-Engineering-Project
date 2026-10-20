@@ -2,8 +2,8 @@
 public class Tester {
     public static void main(String[] args) {
         double area = 5.5;
-        String cust = "1234567890123456";
-        String docket = "6543210987654321";
+        String cust = "1111222233334443";
+        String docket = "1111222233334424";
 
         if (Bill.isValidArea(area) && Bill.isValidCustomerNum(cust)
                 && Bill.isValidDocketNum(docket)) {
@@ -20,4 +20,4 @@ public class Tester {
     }
 }
 
-}
+
