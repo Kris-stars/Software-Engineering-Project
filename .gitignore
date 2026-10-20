@@ -1,1 +1,10 @@
 /.metadata/
+
+# Database password - never upload
+**/db.properties
+
+# Eclipse compiled files and settings
+**/bin/
+*.class
+**/.settings/
+

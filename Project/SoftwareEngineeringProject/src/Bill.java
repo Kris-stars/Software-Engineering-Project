@@ -6,7 +6,7 @@ public class Bill extends Docket {
 	public static final int CUSTOMER_NUM_LENGTH = 16;
 	public static final int DOCKET_NUM_LENGTH = 16;
  
-	public Bill(double area, int custormernum, int docketnum) {
+	public Bill(double area, String custormernum, String docketnum) {
 		super(area, custormernum, docketnum);
 	}
 
