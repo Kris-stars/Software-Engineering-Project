@@ -6,6 +6,7 @@
 		<item key="SmartImportRootWizardPage.STORE_NESTED_PROJECTS" value="true"/>
 		<item key="SmartImportRootWizardPage.STORE_CONFIGURE_NATURES" value="true"/>
 		<list key="org.eclipse.ui.internal.wizards.datatransfer.SmartImportRootWizardPage.knownSources">
+			<item value="C:\Users\krist\OneDrive - TUS MM\YEAR 3\SoftWareDevWork\Software-Engineering-Project\Project\SoftwareEngineeringProject"/>
 			<item value="C:\Users\kryst\Desktop\Software-Engineering-Project\Project"/>
 			<item value="C:\Users\kryst\Desktop\Software-Engineering-Project\Project\SoftwareEngineeringProject"/>
 		</list>
