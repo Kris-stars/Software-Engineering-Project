@@ -1,2 +1,3 @@
-2026/10/20-12:23:06.570 2fec Creating DB C:\Users\13ddu\Desktop\Software-Engineering-Project\Project\SoftwareEngineeringProject\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb since it was missing.
-2026/10/20-12:23:06.591 2fec Reusing MANIFEST C:\Users\13ddu\Desktop\Software-Engineering-Project\Project\SoftwareEngineeringProject\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
+2026/11/03-01:37:18.739 3878 Reusing MANIFEST C:\Users\kryst\Desktop\Software-Engineering-Project\Project\SoftwareEngineeringProject\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/MANIFEST-000001
+2026/11/03-01:37:18.740 3878 Recovering log #3
+2026/11/03-01:37:18.744 3878 Reusing old log C:\Users\kryst\Desktop\Software-Engineering-Project\Project\SoftwareEngineeringProject\.metadata\.plugins\org.eclipse.swt\EBWebView\Default\Local Storage\leveldb/000003.log 

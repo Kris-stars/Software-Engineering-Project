@@ -176,4 +176,108 @@ public class PublicationsTest {
     public void createPublication_invalidPrice() {
         assertThrows(IllegalArgumentException.class, () -> new Publications("1234567890123456", "Daily", 0));
     }
+    
+ // TC20: READ finds an existing publication by its ID.
+    @Test
+    public void read_existingPublication_returnsMatchingObject() {
+        Publications first = new Publications("1111111111111111", "Daily", 2.50);
+        Publications second = new Publications("2222222222222222", "Weekly", 4.00);
+        java.util.List<Publications> list = java.util.Arrays.asList(first, second);
+        assertSame(second, Publications.read("2222222222222222", list));
+    }
+
+    // TC21: READ returns null for a valid but unknown ID.
+    @Test
+    public void read_unknownPublication_returnsNull() {
+        java.util.List<Publications> list = java.util.Arrays.asList(
+            new Publications("1111111111111111", "Daily", 2.50));
+        assertNull(Publications.read("2222222222222222", list));
+    }
+
+    // TC22: READ rejects an incorrectly sized ID.
+    @Test
+    public void read_shortID_returnsNull() {
+        assertNull(Publications.read("123", new java.util.ArrayList<Publications>()));
+    }
+
+    // TC23: READ rejects a null ID.
+    @Test
+    public void read_nullID_returnsNull() {
+        assertNull(Publications.read(null, new java.util.ArrayList<Publications>()));
+    }
+
+    // TC24: READ handles an empty list or null list safely.
+    @Test
+    public void read_emptyOrNullList_returnsNull() {
+        assertNull(Publications.read("1111111111111111", new java.util.ArrayList<Publications>()));
+        assertNull(Publications.read("1111111111111111", null));
+    }
+
+    // TC25: UPDATE changes the price and keeps the same object.
+    @Test
+    public void update_validPrice_changesPrice() {
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        java.util.List<Publications> list = java.util.Arrays.asList(pub);
+        assertSame(pub, Publications.update(pub.getPublicationsID(), "Daily", 3.00, list));
+        assertEquals(3.00, pub.getPrice(), 0.001);
+    }
+
+    // TC26: UPDATE changes the frequency.
+    @Test
+    public void update_validFrequency_changesFrequency() {
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        Publications.update(pub.getPublicationsID(), "Weekly", 2.50, java.util.Arrays.asList(pub));
+        assertEquals("Weekly", pub.getFrequency());
+    }
+
+    // TC27: UPDATE can change both editable fields together.
+    @Test
+    public void update_bothFields_changesBoth() {
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        Publications.update(pub.getPublicationsID(), "Monthly", 5.00, java.util.Arrays.asList(pub));
+        assertEquals("Monthly", pub.getFrequency());
+        assertEquals(5.00, pub.getPrice(), 0.001);
+        assertEquals("1111111111111111", pub.getPublicationsID()); // ID stays fixed.
+    }
+
+    // TC28: UPDATE must not create a record if the ID does not exist.
+    @Test
+    public void update_unknownID_returnsNull() {
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        assertNull(Publications.update("2222222222222222", "Weekly", 3.00,
+            java.util.Arrays.asList(pub)));
+    }
+
+    // TC29: UPDATE rejects a negative price.
+    @Test
+    public void update_negativePrice_returnsNull() {
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        assertNull(Publications.update(pub.getPublicationsID(), "Weekly", -1,
+            java.util.Arrays.asList(pub)));
+    }
+
+    // TC30: UPDATE rejects an unsupported frequency.
+    @Test
+    public void update_invalidFrequency_returnsNull() {
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        assertNull(Publications.update(pub.getPublicationsID(), "Yearly", 3.00,
+            java.util.Arrays.asList(pub)));
+    }
+
+    // TC31: UPDATE rejects a null ID.
+    @Test
+    public void update_nullID_returnsNull() {
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        assertNull(Publications.update(null, "Weekly", 3.00, java.util.Arrays.asList(pub)));
+    }
+
+    // TC32: An invalid update must leave ALL original fields unchanged.
+    @Test
+    public void update_invalidInput_doesNotPartiallyChangeObject() {
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        assertNull(Publications.update(pub.getPublicationsID(), "Weekly", -1,
+            java.util.Arrays.asList(pub)));
+        assertEquals("Daily", pub.getFrequency());
+        assertEquals(2.50, pub.getPrice(), 0.001);
+    }
 }
