@@ -192,4 +192,95 @@ public class OrderBookTest {
         OrderBook book = new OrderBook();
         assertNull(book.getOrder("MISS123456789012"));
     }
+    
+ // TC20: READ returns the exact order that was created.
+    @Test
+    public void getOrder_existing_returnsMatchingOrder() {
+        OrderBook book = new OrderBook();
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        book.createOrder("ORDR123456789012", "1234567890123456", pub);
+        assertEquals("ORDR123456789012", book.getOrder("ORDR123456789012").getOrderNum());
+    }
+
+    // TC21: READ handles a null ID without throwing an exception.
+    @Test
+    public void getOrder_null_returnsNull() {
+        assertNull(new OrderBook().getOrder(null));
+    }
+
+    // TC22: READ handles an empty book.
+    @Test
+    public void getOrder_emptyBook_returnsNull() {
+        assertNull(new OrderBook().getOrder("ORDR123456789012"));
+    }
+
+    // TC23: UPDATE changes the customer number of an existing order.
+    @Test
+    public void updateOrder_validCustomer_changesCustomer() {
+        OrderBook book = new OrderBook();
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        book.createOrder("ORDR123456789012", "1234567890123456", pub);
+        OrderBook.Order updated = book.updateOrder("ORDR123456789012", "9999999999999999", pub);
+        assertNotNull(updated);
+        assertEquals("9999999999999999", updated.getCustomerNum());
+    }
+
+    // TC24: UPDATE changes the publication reference.
+    @Test
+    public void updateOrder_validPublication_changesPublication() {
+        OrderBook book = new OrderBook();
+        Publications oldPub = new Publications("1111111111111111", "Daily", 2.50);
+        Publications newPub = new Publications("2222222222222222", "Weekly", 3.00);
+        book.createOrder("ORDR123456789012", "1234567890123456", oldPub);
+        assertSame(newPub, book.updateOrder("ORDR123456789012", "1234567890123456", newPub).getPublication());
+    }
+
+    // TC25: UPDATE changes both editable fields without changing order ID/count.
+    @Test
+    public void updateOrder_bothFields_changesBoth() {
+        OrderBook book = new OrderBook();
+        Publications oldPub = new Publications("1111111111111111", "Daily", 2.50);
+        Publications newPub = new Publications("2222222222222222", "Weekly", 3.00);
+        book.createOrder("ORDR123456789012", "1234567890123456", oldPub);
+        OrderBook.Order updated = book.updateOrder("ORDR123456789012", "9999999999999999", newPub);
+        assertEquals("9999999999999999", updated.getCustomerNum());
+        assertSame(newPub, updated.getPublication());
+        assertEquals("ORDR123456789012", updated.getOrderNum());
+        assertEquals(1, book.getOrderCount());
+    }
+
+    // TC26: UPDATE must not create an order for an unknown ID.
+    @Test
+    public void updateOrder_unknownID_returnsNull() {
+        OrderBook book = new OrderBook();
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        assertNull(book.updateOrder("ORDR123456789012", "1234567890123456", pub));
+        assertEquals(0, book.getOrderCount());
+    }
+
+    // TC27: UPDATE rejects invalid customer numbers.
+    @Test
+    public void updateOrder_invalidCustomer_returnsNull() {
+        OrderBook book = new OrderBook();
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        book.createOrder("ORDR123456789012", "1234567890123456", pub);
+        assertNull(book.updateOrder("ORDR123456789012", "short", pub));
+    }
+
+    // TC28: UPDATE rejects a null publication.
+    @Test
+    public void updateOrder_nullPublication_returnsNull() {
+        OrderBook book = new OrderBook();
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        book.createOrder("ORDR123456789012", "1234567890123456", pub);
+        assertNull(book.updateOrder("ORDR123456789012", "9999999999999999", null));
+    }
+
+    // TC29: UPDATE rejects a null order ID.
+    @Test
+    public void updateOrder_nullID_returnsNull() {
+        OrderBook book = new OrderBook();
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+        assertNull(book.updateOrder(null, "1234567890123456", pub));
+    }
 }
