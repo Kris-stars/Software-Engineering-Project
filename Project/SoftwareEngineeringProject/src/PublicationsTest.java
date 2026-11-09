@@ -280,4 +280,128 @@ public class PublicationsTest {
         assertEquals("Daily", pub.getFrequency());
         assertEquals(2.50, pub.getPrice(), 0.001);
     }
+    
+    // TC33
+    // Test Objective: Delete an existing publication
+    // Input(s): Valid publication ID in list
+    // Expected Output(s): Publication removed; true returned
+    @Test
+    public void delete_existingPublication_returnsTrue() {
+
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+
+        java.util.List<Publications> list = new java.util.ArrayList<>();
+        list.add(pub);
+
+        assertTrue(Publications.delete("1111111111111111", list));
+        assertEquals(0, list.size());
+    }
+
+    // TC34
+    // Test Objective: Reject deletion of an unknown publication
+    // Input(s): Valid ID not present in list
+    // Expected Output(s): False returned; original publication retained
+    @Test
+    public void delete_unknownPublication_returnsFalse() {
+
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+
+        java.util.List<Publications> list = new java.util.ArrayList<>();
+        list.add(pub);
+
+        assertFalse(Publications.delete("2222222222222222", list));
+        assertEquals(1, list.size());
+    }
+
+    // TC35
+    // Test Objective: Reject deletion using an invalid ID
+    // Input(s): ID shorter than 16 characters
+    // Expected Output(s): False returned
+    @Test
+    public void delete_invalidID_returnsFalse() {
+
+        java.util.List<Publications> list = new java.util.ArrayList<>();
+
+        assertFalse(Publications.delete("123", list));
+    }
+
+    // TC36
+    // Test Objective: Reject deletion using a null ID
+    // Input(s): Null publication ID
+    // Expected Output(s): False returned
+    @Test
+    public void delete_nullID_returnsFalse() {
+
+        java.util.List<Publications> list = new java.util.ArrayList<>();
+
+        assertFalse(Publications.delete(null, list));
+    }
+
+    // TC37
+    // Test Objective: Handle an empty or null publication list
+    // Input(s): Empty list or null list
+    // Expected Output(s): False returned
+    @Test
+    public void delete_emptyOrNullList_returnsFalse() {
+
+        java.util.List<Publications> list = new java.util.ArrayList<>();
+
+        assertFalse(Publications.delete("1111111111111111", list));
+        assertFalse(Publications.delete("1111111111111111", null));
+    }
+
+    // TC38
+    // Test Objective: Ensure only the matching publication is removed
+    // Input(s): List containing multiple publications
+    // Expected Output(s): Correct publication removed; others retained
+    @Test
+    public void delete_onlyMatchingPublication_isRemoved() {
+
+        Publications first = new Publications("1111111111111111", "Daily", 2.50);
+        Publications second = new Publications("2222222222222222", "Weekly", 4.00);
+
+        java.util.List<Publications> list = new java.util.ArrayList<>();
+        list.add(first);
+        list.add(second);
+
+        assertTrue(Publications.delete("1111111111111111", list));
+
+        assertEquals(1, list.size());
+        assertSame(second, list.get(0));
+        assertNull(Publications.read("1111111111111111", list));
+    }
+
+    // TC39
+    // Test Objective: Prevent deleting the same publication twice
+    // Input(s): Delete the same publication ID twice
+    // Expected Output(s): First deletion succeeds; second fails
+    @Test
+    public void delete_twice_secondAttemptReturnsFalse() {
+
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+
+        java.util.List<Publications> list = new java.util.ArrayList<>();
+        list.add(pub);
+
+        assertTrue(Publications.delete("1111111111111111", list));
+        assertFalse(Publications.delete("1111111111111111", list));
+    }
+
+    // TC40
+    // Test Objective: Safely handle null entries in the publication list
+    // Input(s): List containing null and a valid publication
+    // Expected Output(s): Matching publication removed without errors
+    @Test
+    public void delete_listContainsNull_removesMatchingPublication() {
+
+        Publications pub = new Publications("1111111111111111", "Daily", 2.50);
+
+        java.util.List<Publications> list = new java.util.ArrayList<>();
+        list.add(null);
+        list.add(pub);
+
+        assertTrue(Publications.delete("1111111111111111", list));
+        assertEquals(1, list.size());
+        assertNull(list.get(0));
+    }
 }
