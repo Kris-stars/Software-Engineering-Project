@@ -1,98 +1,101 @@
+
 import java.util.ArrayList;
 
 public class CustomerBook {
 
+    // Customer details
     private String customerID;
     private String customerFirstName;
     private String customerSurname;
     private String customerAddress;
     private String customerPhoneNumber;
 
-    // List to store all customers
+    // stores all the customers
     private static ArrayList<CustomerBook> customers = new ArrayList<>();
+    
+    // Default constructor
+    public CustomerBook() {
+    }
+    
+    // Constructor with customer details 
+    public CustomerBook(String customerID, String customerFirstName, String customerSurname, String customerAddress, String customerPhoneNumber) 
+    {
 
-    // Create customer
-    public CustomerBook(String customerID, String customerFirstName, String customerSurname, String customerAddress, String customerPhoneNumber) {
+        if (!createCustomerAccount(customerID, customerFirstName, customerSurname, customerAddress, customerPhoneNumber)) {
 
-        setCustomerID(customerID);
-        setCustomerFirstName(customerFirstName);
-        setCustomerSurname(customerSurname);
-        setCustomerAddress(customerAddress);
-        setCustomerPhoneNumber(customerPhoneNumber);
+            throw new IllegalArgumentException(
+                    "Invalid customer details");
+        }
     }
 
-    // Valid customer ID must be 16 characters
-    public void setCustomerID(String customerID) {
+    // The customer ID must contain 16 characters
+    public boolean verifyCustomerID(String customerID) {
+        return customerID != null && customerID.length() == 16;
+    }
 
-        if (customerID == null || customerID.length() != 16) {
-            throw new IllegalArgumentException("Customer ID must be 16 characters");
+    // The first name
+    public boolean verifyFirstName(String firstName) {
+        return firstName != null && !firstName.trim().isEmpty();
+    }
+
+    // The surname
+    public boolean verifySurname(String surname) {
+        return surname != null && !surname.trim().isEmpty();
+    }
+
+    // The address
+    public boolean verifyAddress(String address) {
+        return address != null && !address.trim().isEmpty();
+    }
+
+    // The phone number contains exactly 10 digits
+    public boolean verifyPhoneNumber(String phoneNumber) {
+        return phoneNumber != null && phoneNumber.matches("[0-9]{10}");
+    }
+
+ // Creates a customer
+    public boolean createCustomerAccount(String customerID, String firstName,
+            String surname, String address, String phoneNumber) {
+
+        if (verifyCustomerID(customerID) && verifyFirstName(firstName) && verifySurname(surname) && verifyAddress(address) && verifyPhoneNumber(phoneNumber)) 
+        {
+
+            this.customerID = customerID;
+            this.customerFirstName = firstName;
+            this.customerSurname = surname;
+            this.customerAddress = address;
+            this.customerPhoneNumber = phoneNumber;
+
+            return true;
         }
 
-        this.customerID = customerID;
+        return false;
     }
-
-    // First name must be 1 to 16 letters
-    public void setCustomerFirstName(String customerFirstName) {
-
-        if (customerFirstName == null || customerFirstName.trim().isEmpty()
-                || customerFirstName.trim().length() > 16) {
-            throw new IllegalArgumentException("First name must be 1 to 16 characters");
-        }
-
-        this.customerFirstName = customerFirstName;
-    }
-
-    // Surname must be 1 to 16 letters
-    public void setCustomerSurname(String customerSurname) {
-
-        if (customerSurname == null || customerSurname.trim().isEmpty()
-                || customerSurname.trim().length() > 16) {
-            throw new IllegalArgumentException("Surname must be 1 to 16 characters");
-        }
-
-        this.customerSurname = customerSurname;
-    }
-
-    // Address must be 1 to 16 letters
-    public void setCustomerAddress(String customerAddress) {
-
-        if (customerAddress == null || customerAddress.trim().isEmpty()
-                || customerAddress.trim().length() > 16) {
-            throw new IllegalArgumentException("Address must be 1 to 16 characters");
-        }
-
-        this.customerAddress = customerAddress;
-    }
-
-    // Phone number must contain exactly 10 digits
-    public void setCustomerPhoneNumber(String customerPhoneNumber) {
-
-        if (customerPhoneNumber == null || !customerPhoneNumber.matches("[0-9]{10}")) {
-            throw new IllegalArgumentException("Phone number must contain 10 digits");
-        }
-
-        this.customerPhoneNumber = customerPhoneNumber;
-    }
-
-    //Adds new a customer to the list
+    
+    // Add customer to the list
     public void addCustomer(CustomerBook customer) {
 
-        if (customer == null) {
-            throw new IllegalArgumentException("Customer cannot be null");
+        if (customer == null || customer.customerID == null) {
+            throw new IllegalArgumentException(
+                    "Customer and customer ID cannot be null");
         }
 
         if (findCustomerByID(customer.getCustomerID()) != null) {
-            throw new IllegalArgumentException("Customer ID already exists");
+            throw new IllegalArgumentException(
+                    "Customer ID already exists");
         }
 
         customers.add(customer);
     }
 
-    //Finds a customer using their ID
+    // Find customer using their ID
     public CustomerBook findCustomerByID(String customerID) {
 
-        for (CustomerBook customer : customers) {
+        if (customerID == null) {
+            return null;
+        }
 
+        for (CustomerBook customer : customers) {
             if (customer.getCustomerID().equals(customerID)) {
                 return customer;
             }
@@ -101,8 +104,9 @@ public class CustomerBook {
         return null;
     }
 
-    //Updates a customers details
-    public boolean updateCustomer(String customerID, String firstName, String surname, String address, String phoneNumber) {
+    // Update customer details
+    public boolean updateCustomer( String customerID, String firstName, String surname, String address, String phoneNumber)
+    {
 
         CustomerBook customer = findCustomerByID(customerID);
 
@@ -110,29 +114,35 @@ public class CustomerBook {
             return false;
         }
 
-        customer.setCustomerFirstName(firstName);
-        customer.setCustomerSurname(surname);
-        customer.setCustomerAddress(address);
-        customer.setCustomerPhoneNumber(phoneNumber);
+        // Checks all details before updating
+        if (!customer.verifyFirstName(firstName)|| !customer.verifySurname(surname) || !customer.verifyAddress(address) || !customer.verifyPhoneNumber(phoneNumber))
+        {
+
+            return false;
+        }
+
+        customer.customerFirstName = firstName;
+        customer.customerSurname = surname;
+        customer.customerAddress = address;
+        customer.customerPhoneNumber = phoneNumber;
 
         return true;
     }
 
-    // Delete a customer using their ID
+    // Delete customer using their ID
     public boolean deleteCustomer(String customerID) {
 
         CustomerBook customer = findCustomerByID(customerID);
 
-        if (customer == null) {
-            return false;
+        if (customer != null) {
+            customers.remove(customer);
+            return true;
         }
 
-        customers.remove(customer);
-
-        return true;
+        return false;
     }
 
-    // Read customer details using getters
+    // Getters
     public String getCustomerID() {
         return customerID;
     }
